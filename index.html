@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Suivi Nutrition</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🥗 Suivi Nutrition</h1>
+    <button id="settingsBtn" class="ghost" title="Réglages">⚙️ Réglages</button>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="date-row">
+        <button id="prevDay" class="ghost">‹</button>
+        <input type="date" id="dateInput">
+        <button id="nextDay" class="ghost">›</button>
+      </div>
+
+      <div class="summary">
+        <div class="kcal-ring">
+          <div class="kcal-num"><span id="kcalTotal">0</span><small>/ <span id="kcalGoalLabel">2000</span> kcal</small></div>
+          <div class="bar"><div id="kcalBar"></div></div>
+          <div id="kcalRemaining" class="muted"></div>
+        </div>
+        <div class="macros">
+          <div class="macro"><b id="mProt">0</b> g<span>Protéines</span></div>
+          <div class="macro"><b id="mCarb">0</b> g<span>Glucides</span></div>
+          <div class="macro"><b id="mFat">0</b> g<span>Lipides</span></div>
+          <div class="macro"><b id="mFib">0</b> g<span>Fibres</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Ajouter un repas</h2>
+      <div class="row">
+        <select id="mealType">
+          <option value="Petit-déjeuner">Petit-déjeuner</option>
+          <option value="Déjeuner">Déjeuner</option>
+          <option value="Dîner">Dîner</option>
+          <option value="Collation">Collation</option>
+        </select>
+      </div>
+      <textarea id="mealText" rows="3" placeholder="Ex : 2 œufs au plat, 2 tranches de pain complet, 1 verre de jus d'orange"></textarea>
+      <div class="row">
+        <label class="file-btn ghost">📷 Photo (optionnel)
+          <input type="file" id="mealPhoto" accept="image/*" hidden>
+        </label>
+        <span id="photoName" class="muted"></span>
+        <button id="analyzeBtn" class="primary">Calculer les valeurs</button>
+      </div>
+      <div id="status" class="muted"></div>
+
+      <div id="preview" hidden>
+        <h3>Résultat</h3>
+        <table id="previewTable"></table>
+        <div class="row">
+          <button id="saveBtn" class="primary">✅ Enregistrer le repas</button>
+          <button id="discardBtn" class="ghost">Annuler</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Repas du jour</h2>
+      <div id="mealList"></div>
+    </section>
+
+    <section class="card">
+      <h2>Historique (7 derniers jours)</h2>
+      <div id="history"></div>
+      <div class="row">
+        <button id="exportBtn" class="ghost">⬇️ Exporter (JSON)</button>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="settings">
+    <form method="dialog">
+      <h2>Réglages</h2>
+      <label>Clé API Gemini
+        <input type="password" id="apiKey" placeholder="Votre clé API" autocomplete="off">
+      </label>
+      <p class="muted">La clé est stockée uniquement dans ce navigateur (localStorage).</p>
+      <label>Modèle
+        <input type="text" id="model" value="gemini-2.5-flash">
+      </label>
+      <label>Objectif calories / jour
+        <input type="number" id="goal" min="500" step="50" value="2000">
+      </label>
+      <div class="row">
+        <button id="saveSettings" class="primary" value="ok">Enregistrer</button>
+        <button value="cancel" class="ghost">Fermer</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
